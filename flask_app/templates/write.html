@@ -1,0 +1,107 @@
+
+<!doctype html>
+<html lang="en" class="h-100">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Chris Matthews, Steven Len, Amobi Daba">
+    <title>What to Watch?</title>
+   
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+
+    
+    <!-- Custom styles -->
+    <link href="../static/css/style.css" rel="stylesheet">
+  </head>
+  <body class="d-flex h-100 text-center text-white bg-dark">
+    
+<div class="cover-container d-flex p-3 mx-auto flex-column">
+  <header class="mb-auto">
+    <div>
+      <h2 class="float-md-start mb-0">What to Watch?</h2>
+      <nav class="nav nav-masthead justify-content-center float-md-end">
+        <a class="nav-link active" aria-current="page" href="#">Home</a>
+        <a class="nav-link" href="#">Read Reviews</a>
+        <a class="nav-link" href="#">Join/Sign In</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="px-3 h-75">
+    <div class="m-5 p-5">
+        <h4 class="mt-5 mx-5 text-start" >Write New Review</h4>
+        <form class="mt-1" action='/new_review' method='post'>  
+          <div class="row form-group pt-2">
+              <label class="col-3 text-end" for="title">Title:</label>
+              <input type="text" class="col-5 mx-2" name="title" placeholder="">
+          </div>
+          <div class="row form-group pt-2">
+            <label class="col-3 text-end" for="service_id">Platform:</label>
+            <select name="service_id" class="col-3 mx-2">
+              <option selected value="1">Netflix</option>
+              <option value="2">Amazon Prime</option>
+              <option value="3">Hulu</option>
+              <option value="4">Disney Plus</option>
+              <option value="5">HBO Max</option>
+              <option value="6">Peacock</option>
+            </select>
+          </div>
+          <div class="row form-group pt-2">
+            <label class="col-3 text-end" for="type">Type:</label>
+            <select name="type" class="col-3 mx-2">
+              <option value="1">Series</option>
+              <option selected value="2">Movies</option>
+              <option value="3">Short Feature</option>
+            </select>
+          </div>
+          <div class="row form-group pt-2">
+            <label class="col-3 text-end" for="type">Category:</label>
+            <select name="category" class="col-3 mx-2">
+              <option selected value="Drama">Drama</option>
+              <option value="Comedy">Comedy</option>
+              <option value="Action">Action</option>
+              <option value="Romance">Romance</option>
+              <option value="Thriller">Thriller</option>
+              <option value="Horror">Horror</option>
+              <option value="Fantasy">Fantasy</option>
+              <option value="Documentary">Documentary</option>
+            </select>
+          </div>
+          <div class="row form-group pt-2">
+            <label class="col-3 text-end" for="title">Image (URL):</label>
+            <input type="text" class="col-5 mx-2" name="title" placeholder="">
+          </div>
+          <div class="row form-group pt-2">
+            <label class="col-3 text-end" for="title">IMDB Page (URL):</label>
+            <input type="text" class="col-5 mx-2" name="title" placeholder="">
+          </div>
+          <div class="row form-group pt-2">
+            <label class="col-3 text-end" for="type">Rating:</label>
+            <input type="number" class="col-1 mx-2" name="rating" min="1" max="10" placeholder="">
+            <span class="col-2 text-start text-warning"><strong>out of 10 ★</strong></span>
+          </div>          
+          <div class="row form-group pt-2">
+              <label class="col-3 text-end" for="password">Comment:</label>
+              <textarea rows="5" class="col-5 mx-2" name="comment" placeholder=""></textarea>
+            </div>
+            <div class="row form-group ps-5 pt-2">
+                <span class="col-3"></span>
+                <input type="submit" class="mx-5 col-2 btn-primary" value="Submit">
+          </div>
+      </form>
+    </div>
+  </main>
+
+  <footer class="mt-auto text-white-50">
+    <p>A Community Site for Recommending and Discovering Streaming Media.</p>
+  </footer>
+</div>
+
+
+    
+  </body>
+</html>
