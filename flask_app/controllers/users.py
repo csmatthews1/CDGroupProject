@@ -6,20 +6,16 @@ from flask_bcrypt import Bcrypt
 bcrypt = Bcrypt(app)
 
 app.secret_key = 'iringvneii;ai;jfngri;albjdbd niueeuhrfi'
-@app.route('/')
-def index():
-    return redirect('/login')
 
-@app.route('/register_login')
-def main_page():
+@app.route('/signin')
+def signin():
     return render_template('login.html')
-
 
 
 @app.route('/register', methods = ['POST'])
 def register():
     if not User.validate_user(request.form):
-        return redirect('/')
+        return redirect('/signin')
     data = {
         'first_name':request.form['first_name'],
         'last_name':request.form['last_name'],
@@ -35,27 +31,15 @@ def login():
     user_in_db = User.get_by_email(request.form)
     if not user_in_db:
         flash('Invalid email or password', 'login')
-        return redirect('/')
+        return redirect('/signin')
     if not bcrypt.check_password_hash(user_in_db.password, request.form['password']):
         flash('Invlid email or password','login')
-        return redirect('/')
+        return redirect('/signin')
 
     session['user_id'] = user_in_db.id
-    return redirect('/dashboard')
-
-@app.route('/home')
-def login_page():
-    if 'user_id' not in session:
-        return redirect('/')
-    data = {
-        'id' : session['user_id']
-    }
-    # this method will be used to for the "Recent Reviews" page
-    video = Video.get_videos_with_recent_reviews()
-
-    return render_template('index.html', videos = video )
+    return redirect('/')
 
 @app.route('/logout')
 def logout():
-    session.pop('user_id')
+    session.clear()
     return redirect('/')

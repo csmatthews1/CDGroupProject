@@ -24,9 +24,16 @@
     <div>
       <h2 class="float-md-start mb-0">What to Watch?</h2>
       <nav class="nav nav-masthead justify-content-center float-md-end">
-        <a class="nav-link active" aria-current="page" href="#">Home</a>
-        <a class="nav-link" href="#">Read Reviews</a>
-        <a class="nav-link" href="#">Join/Sign In</a>
+        <a class="nav-link" aria-current="page" href="/">Home</a>
+        {% if session %}
+            <a class="nav-link active" href="/write_review">Write Review</a>
+        {% endif %}
+        <a class="nav-link" href="/reviews">Read Reviews</a>
+        {% if session %}
+            <a class="nav-link" href="/logout">Sign Out</a>
+        {% else %}
+            <a class="nav-link" href="/signin">Join/Sign In</a>
+        {% endif %}
       </nav>
     </div>
   </header>
@@ -37,29 +44,29 @@
         <form class="mt-1" action='/add_review' method='post'>  
           <div class="row pt-2">
               <p class="col-3 text-end">Title:</p>
-              <p class="col-5 text-start">{Title}</p>
+              <p class="col-5 text-start">{{video.title}}</p>
           </div>
           <div class="row pt-2">
             <p class="col-3 text-end">Platform:</p>
-            <p class="col-5 text-start">{Service_Name}</p>
+            <p class="col-5 text-start">{{video.service.name}}</p>
           </div>
           <div class="row pt-2">
             <p class="col-3 text-end">Type:</p>
-            <p class="col-5 text-start">{Media_Type}</p>
+            <p class="col-5 text-start">{{video.type}}</p>
           </div>
           <div class="row pt-2">
             <p class="col-3 text-end">Category:</p>
-            <p class="col-5 text-start">{Category}</p>
+            <p class="col-5 text-start">{{video.category}}</p>
           </div>
           <div class="row form-group pt-2">
-            <label class="col-3 text-end" for="type">Rating:</label>
-            <input type="hidden" name="video_id">
+            <label class="col-3 text-end" for="rating">Rating:</label>
+            <input type="hidden" name="video_id" value="{{video.id}}">
             <input type="number" class="col-1 mx-2" name="rating" min="1" max="10" placeholder="">
             <span class="col-2 text-start text-warning"><strong>out of 10 ★</strong></span>
           </div>          
           <div class="row form-group pt-2">
-              <label class="col-3 text-end" for="password">Comment:</label>
-              <textarea rows="5" class="col-5 mx-2" name="comment" placeholder=""></textarea>
+              <label class="col-3 text-end" for="comments">Comments:</label>
+              <textarea rows="5" class="col-5 mx-2" name="comments" placeholder=""></textarea>
             </div>
             <div class="row form-group ps-5 pt-2">
                 <span class="col-3"></span>

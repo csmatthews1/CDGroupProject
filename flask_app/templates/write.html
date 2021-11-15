@@ -24,9 +24,16 @@
     <div>
       <h2 class="float-md-start mb-0">What to Watch?</h2>
       <nav class="nav nav-masthead justify-content-center float-md-end">
-        <a class="nav-link active" aria-current="page" href="#">Home</a>
-        <a class="nav-link" href="#">Read Reviews</a>
-        <a class="nav-link" href="#">Join/Sign In</a>
+        <a class="nav-link" aria-current="page" href="/">Home</a>
+        {% if session %}
+            <a class="nav-link active" href="/write_review">Write Review</a>
+        {% endif %}
+        <a class="nav-link" href="/reviews">Read Reviews</a>
+        {% if session %}
+            <a class="nav-link" href="/logout">Sign Out</a>
+        {% else %}
+            <a class="nav-link" href="/signin">Join/Sign In</a>
+        {% endif %}
       </nav>
     </div>
   </header>
@@ -42,20 +49,17 @@
           <div class="row form-group pt-2">
             <label class="col-3 text-end" for="service_id">Platform:</label>
             <select name="service_id" class="col-3 mx-2">
-              <option selected value="1">Netflix</option>
-              <option value="2">Amazon Prime</option>
-              <option value="3">Hulu</option>
-              <option value="4">Disney Plus</option>
-              <option value="5">HBO Max</option>
-              <option value="6">Peacock</option>
+              {% for s in services %}
+                <option selected value="{{s.id}}">{{s.name}}</option>
+              {% endfor %}
             </select>
           </div>
           <div class="row form-group pt-2">
             <label class="col-3 text-end" for="type">Type:</label>
             <select name="type" class="col-3 mx-2">
-              <option value="1">Series</option>
-              <option selected value="2">Movies</option>
-              <option value="3">Short Feature</option>
+              <option value="Series">Series</option>
+              <option selected value="Movies">Movies</option>
+              <option value="Short Features">Short Features</option>
             </select>
           </div>
           <div class="row form-group pt-2">
@@ -72,21 +76,21 @@
             </select>
           </div>
           <div class="row form-group pt-2">
-            <label class="col-3 text-end" for="title">Image (URL):</label>
-            <input type="text" class="col-5 mx-2" name="title" placeholder="">
+            <label class="col-3 text-end" for="img_url">Image (URL):</label>
+            <input type="text" class="col-5 mx-2" name="img_url" placeholder="">
           </div>
           <div class="row form-group pt-2">
-            <label class="col-3 text-end" for="title">IMDB Page (URL):</label>
-            <input type="text" class="col-5 mx-2" name="title" placeholder="">
+            <label class="col-3 text-end" for="info_url">IMDB Page (URL):</label>
+            <input type="text" class="col-5 mx-2" name="info_url" placeholder="">
           </div>
           <div class="row form-group pt-2">
-            <label class="col-3 text-end" for="type">Rating:</label>
+            <label class="col-3 text-end" for="rating">Rating:</label>
             <input type="number" class="col-1 mx-2" name="rating" min="1" max="10" placeholder="">
             <span class="col-2 text-start text-warning"><strong>out of 10 ★</strong></span>
           </div>          
           <div class="row form-group pt-2">
-              <label class="col-3 text-end" for="password">Comment:</label>
-              <textarea rows="5" class="col-5 mx-2" name="comment" placeholder=""></textarea>
+              <label class="col-3 text-end" for="comments">Comment:</label>
+              <textarea rows="5" class="col-5 mx-2" name="comments" placeholder=""></textarea>
             </div>
             <div class="row form-group ps-5 pt-2">
                 <span class="col-3"></span>
