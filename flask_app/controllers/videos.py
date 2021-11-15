@@ -21,9 +21,10 @@ def view_review(video_id):
 
     #check to see if logged in user has already reviewed this video
     reviewed = False
-    for r in v.reviews:
-        if r.user_id == session['user_id']:
-            reviewed = True
+    if 'user_id' in session:
+        for r in v.reviews:
+            if r.user_id == session['user_id']:
+                reviewed = True
 
     return render_template('review.html', video = v, reviewed = reviewed)
 

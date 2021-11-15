@@ -64,8 +64,8 @@
         </table>
         <div class="mx-5 row mt-2 flex">
           <div class="col-6 text-start"><h3 class="mt-3">User Reviews</h3></div>
-          {% if not reviewed %}
-            <div class="mt-4 col-3 text-end"><a href="/add_review/{{video.id}}">Add My Review</a></div>
+          {% if not reviewed and session %}
+             <div class="mt-4 col-3 text-end"><a href="/add_review/{{video.id}}">Add My Review</a></div>
           {% endif %}
         </div>
         </tr>
