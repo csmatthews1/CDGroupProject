@@ -1,5 +1,5 @@
 from flask_app.config.mysqlconnection import connectToMySQL
-from flask_app.models import user
+from flask_app.models import user, service
 
 class Video:
     def __init__(self, data):
@@ -10,7 +10,7 @@ class Video:
         self.info_url = data['info_url']
         self.type = data['type']
         self.rating = None
-        self.service_name = None
+        self.service = None
        
     @classmethod
     def create_video(cls, data):
@@ -21,7 +21,7 @@ class Video:
     @classmethod
     # this method will be used to for the "Recent Reviews" page
     def get_videos_with_recent_reviews(cls):
-        query = 'SELECT * FROM videos JOIN reviews ON videos.id = reviews.video_id ORDER BY reviews.created_at DESC LIMIT 4'
+        query = 'SELECT * FROM videos JOIN reviews on videos.id = reviews.video_id ORDER BY reviews.created_at DESC LIMIT 4'
         results = connectToMySQL('what_to_watch').query_db(query)
         video_list = []
         for row in results:
@@ -33,7 +33,7 @@ class Video:
     @classmethod
     # this method is to display the video and the creators rating above the "User Reviews" heading
     def get_video_with_creator_rating(cls, data):
-        query = 'SELECT * FROM videos JOIN users ON videos.user_id = users.id JOIN reviews ON videos.user_id = reviews.user_id WHERE videos.id = %(id)s'
+        query = 'SELECT * FROM videos JOIN users ON videos.user_id = user.id JOIN reviews ON videos.user_id = reviews.user_id WHERE videos.id = %(id)s'
         result = connectToMySQL('what_to_watch').query_db(query, data)
         video = cls(result[0])
         video.rating = result[0]['rating']
@@ -46,9 +46,17 @@ class Video:
         results = connectToMySQL('what_to_watch').query_db(query)
         review_list = []
         for row in results:
+            service_data ={
+                'id' : row['service.id'],
+                'name' : row['name'],
+                'logo_url': row['logo_url'],
+                'website' : row['website'],
+                'created_at': row['service.created_at'],
+                'updated_at': row['service.updated_at']
+            }
             video = cls(row)
             video.rating = row['rating']
-            video.service_name = row['name']
+            video.service = service.Service(service_data)
             review_list.append(video)
         return review_list
 
@@ -57,5 +65,13 @@ class Video:
         query ='SELECT * FROM videos JOIN services ON videos.service_id = service.id WHERE videos.id = %(id)s'
         video = connectToMySQL('watch_to_watch').query_db(query, data)
         result = cls(video[0])
-        result.service_name = video[0]['name']
+        service_data = {
+            'id' : video[0]['service.id'],
+            'name' : video[0]['name'],
+            'logo_url': video[0]['logo_url'],
+            'website' : video[0]['website'],
+            'created_at': video[0]['service.created_at'],
+            'updated_at': video[0]['service.updated_at']
+        }
+        result.service = service.Service(service_data)
         return result
